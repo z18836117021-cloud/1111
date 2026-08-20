@@ -14,7 +14,6 @@ import android.util.Base64
 import android.view.*
 import android.widget.ImageView
 import java.util.Locale
-import kotlin.random.Random
 
 class PetService : Service(), TextToSpeech.OnInitListener {
     private lateinit var wm: WindowManager
@@ -120,16 +119,14 @@ class PetService : Service(), TextToSpeech.OnInitListener {
     }
 
     private fun interact() {
-        val p = poses.random()
-        petView?.setImageBitmap(loadPose(p))
-        val line = lines.random()
-        tts?.speak(line, TextToSpeech.QUEUE_FLUSH, null, "deskpet_line")
+        petView?.setImageBitmap(loadPose(poses.random()))
+        tts?.speak(lines.random(), TextToSpeech.QUEUE_FLUSH, null, "deskpet_line")
     }
 
     private fun loadSheet(): Bitmap? {
         return try {
             val all = buildString {
-                for (i in 0..9) {
+                for (i in 0..5) {
                     val name = "pet_sheet.b64.part" + i.toString().padStart(2, '0')
                     append(assets.open(name).bufferedReader().use { it.readText() })
                 }
